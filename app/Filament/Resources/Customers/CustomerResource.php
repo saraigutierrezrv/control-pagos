@@ -19,6 +19,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Actions\EditAction;
 use Filament\Actions\Action;
+use App\Filament\Resources\Customers\RelationManagers\PaymentsRelationManager;
 
 class CustomerResource extends Resource
 {
@@ -72,7 +73,20 @@ public static function table(Table $table): Table
                 ->label('Recordar')
                 ->icon('heroicon-o-chat-bubble-left-right')
                 ->color('success')
-                ->url(fn ($record) => "https://wa.me/{$record->phone}?text=" . urlencode("Hola {$record->name}, te saludamos de ICEA. Te recordamos tu pago de este mes. ¡Saludos!"))
+                ->url(function ($record) {
+                    // 1. Preparamos los datos dinámicos
+                    $nombre = $record->name;
+                    $monto = number_format($record->monthly_amount, 2);
+                    $mes = now()->translatedFormat('F'); // Esto pondrá "febrero" automáticamente
+                    
+                    // 2. Limpiamos el teléfono por si tiene espacios o guiones
+                    $telefono = preg_replace('/[^0-9]/', '', $record->phone);
+
+                    // 3. Redactamos el mensaje con negritas (*) y emojis
+                    $mensaje = "Hola *{$nombre}*, te saludamos de *ICEA*. 👋 Te recordamos de realizar tu pago de *{$mes}* por un monto de *\${$monto}*. ¡Bendiciones! ✨";
+
+                    return "https://wa.me/{$telefono}?text=" . urlencode($mensaje);
+                })
                 ->openUrlInNewTab(),
             EditAction::make(),
         ]);
@@ -81,7 +95,7 @@ public static function table(Table $table): Table
     public static function getRelations(): array
     {
         return [
-            //
+            PaymentsRelationManager::class,
         ];
     }
 

@@ -17,7 +17,8 @@ class PaymentsTable
             ->columns([
                 // Aquí usamos la relación punto 'customer.name'
                 TextColumn::make('customer.name')
-                    ->label('Cliente')
+                    ->label('Cliente') 
+                     
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('month')
@@ -39,9 +40,13 @@ class PaymentsTable
                     ->date('d/m/Y'),
 
                 TextColumn::make('payment_method')
-                ->formatStateUsing(fn (int $state): string => match ($state) {
-                        1 => 'Transferencia', 2 => 'Efectivo', 3 => 'Otro',
-                        default => $state,
+                    ->badge() // Lo hace ver más bonito como una etiqueta
+                    ->color('info')
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        'transferencia' => 'Transferencia',
+                        'efectivo' => 'Efectivo',
+                        'otro' => 'Otro',
+                        default => ucfirst($state), // ucfirst pone la primera en mayúscula
                     })
                     ->searchable(),
                 TextColumn::make('created_at')

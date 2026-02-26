@@ -11,26 +11,43 @@ class PaymentInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('customer_id')
-                    ->numeric(),
+                // Mostramos el nombre del cliente usando la relación
+                TextEntry::make('customer.name')
+                    ->label('Cliente'),
+
                 TextEntry::make('month')
-                    ->numeric(),
-                TextEntry::make('year')
-                    ->numeric(),
-                TextEntry::make('amount')
-                    ->numeric(),
-                TextEntry::make('payment_date')
-                    ->date(),
-                TextEntry::make('payment_method')
-                    ->placeholder('-')
-                    ->formatStateUsing(fn (int $state): string => match ($state) {
-                        1 => 'Transferencia', 2 => 'Efectivo', 3 => 'Otro',
+                    ->label('Mes')
+                    ->formatStateUsing(fn ($state) => match ((int)$state) {
+                        1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+                        5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+                        9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre',
                         default => $state,
                     }),
+
+                TextEntry::make('year')
+                    ->label('Año'),
+
+                TextEntry::make('amount')
+                    ->label('Monto Pagado')
+                    ->money('USD'),
+
+                TextEntry::make('payment_date')
+                    ->label('Fecha del Pago')
+                    ->date('d/m/Y'),
+
+                TextEntry::make('payment_method')
+                    ->label('Método de Pago')
+                    ->badge() // Lo hace ver más bonito como una etiqueta
+                    ->color('info')
+                    ->formatStateUsing(fn ($state) => match ($state) {
+                        'transferencia' => 'Transferencia',
+                        'efectivo' => 'Efectivo',
+                        'otro' => 'Otro',
+                        default => ucfirst($state), // ucfirst pone la primera en mayúscula
+                    }),
+
                 TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
+                    ->label('Registrado el')
                     ->dateTime()
                     ->placeholder('-'),
             ]);
