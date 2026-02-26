@@ -1,23 +1,49 @@
-# Sistema de Gestión de Pagos
+# 💰 Control de Pagos - ICEA
 
-Este es un sistema administrativo integral para el control de cobros mensuales y gestión de clientes, desarrollado con **Laravel** y **Filament**.
+Sistema integral de gestión administrativa y control de cobros desarrollado para **ICEA** (Impuestos y Contabilidad E&A). Esta herramienta optimiza el seguimiento de carteras de clientes, automatiza la cobranza y ofrece una visión clara del flujo de caja.
 
-## 🚀 Funcionalidades Principales
-- **Control de Clientes:** Gestión de perfiles con estados de pago dinámicos.
-- **Registro de Pagos:** Sistema con validación para evitar cobros duplicados en el mismo periodo.
-- **Relaciones Integradas:** Historial de pagos accesible directamente desde el perfil del cliente.
-- **Dashboard de Negocio:** Visualización de métricas financieras y tendencias de ingresos.
-- **Cobranza Automatizada:** Integración para envío de recordatorios de pago personalizados.
+
+## 🚀 Funcionalidades 
+
+* **🚦 Semáforo de Pagos:** Identificación visual instantánea (`✅ Pagado` / `⏳ Pendiente`) en la lista de clientes para detectar moras al instante.
+* **📂 Historial Integrado:** Visualización y registro de abonos directamente desde el perfil de cada cliente (*Relation Manager*).
+* **🛡️ Validación Anti-Duplicados:** Protección inteligente que impide registrar dos veces el mismo mes y año para un cliente, evitando errores contables.
+* **💬 Cobranza One-Click:** Botón dinámico de WhatsApp que genera recordatorios personalizados con el nombre del cliente, el mes adeudado y el monto exacto en negritas.
+* **📊 Dashboard Estratégico:** Resumen de recaudación mensual y gráficos de tendencia de ingresos para una toma de decisiones informada.
 
 ## 🛠️ Stack Tecnológico
-- **Backend:** Laravel 12
-- **Panel Administrativo:** Filament v5
-- **Base de Datos:** MySQL
-- **Frontend:** Tailwind CSS
 
-## 💻 Instalación
-1. Clonar el repositorio.
-2. Ejecutar `composer install` y `npm install`.
-3. Configurar el archivo `.env` con las credenciales de base de datos.
-4. Ejecutar `php artisan migrate`.
-5. Crear un usuario administrativo con `php artisan make:filament-user`.
+* **Framework:** Laravel 12
+* **Panel Administrativo:** Filament v5 (TALL Stack)
+* **Lenguaje:** PHP 8.3
+* **Base de Datos:** MySQL
+* **Estilos:** Tailwind CSS
+
+
+
+## 🚀 Instalación y Configuración
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [https://github.com/tu-usuario/control-pagos.git](https://github.com/tu-usuario/control-pagos.git)
+    ```
+2.  **Instalar dependencias:**
+    ```bash
+    composer install
+    npm install && npm run dev
+    ```
+3.  **Configurar el entorno:**
+    - Copiar el archivo `.env.example` a `.env`.
+    - Configurar las credenciales de tu base de datos local.
+    - Ejecutar `php artisan key:generate`.
+4.  **Ejecutar migraciones:**
+    ```bash
+    php artisan migrate
+    ```
+5.  **Crear acceso administrativo:**
+    ```bash
+    php artisan make:filament-user
+    ```
+
+---
+Desarrollado con pasión por **Sarai Gutiérrez** | **Eleos Studio** 🇸🇻
