@@ -47,7 +47,7 @@ class PaymentForm
                             ->required(),
                     ]),
 
-                Grid::make(2)
+                Grid::make(3)
                     ->schema([
                         // Monto
                         TextInput::make('amount')
@@ -55,6 +55,13 @@ class PaymentForm
                             ->numeric()
                             ->prefix('$')
                             ->required(),
+
+                        // Método de pago
+                        Select::make('payment_method')
+                            ->label('Método de Pago')
+                            ->options([
+                                1 => 'Transferencia', 2 => 'Efectivo', 3 => 'Otro'
+                            ]),
 
                         // Fecha de pago
                         DatePicker::make('payment_date')

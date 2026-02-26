@@ -15,22 +15,34 @@ class PaymentsTable
     {
         return $table
             ->columns([
-                TextColumn::make('customer_id')
-                    ->numeric()
+                // Aquí usamos la relación punto 'customer.name'
+                TextColumn::make('customer.name')
+                    ->label('Cliente')
+                    ->searchable()
                     ->sortable(),
                 TextColumn::make('month')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Mes')
+                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                        1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+                        5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+                        9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre',
+                        default => $state,
+                    }),
                 TextColumn::make('year')
-                    ->numeric()
-                    ->sortable(),
+                    ->label('Año'),
                 TextColumn::make('amount')
-                    ->numeric()
+                    ->label('Monto')
+                    ->money('USD')
                     ->sortable(),
                 TextColumn::make('payment_date')
-                    ->date()
-                    ->sortable(),
+                    ->label('Fecha de Pago')
+                    ->date('d/m/Y'),
+
                 TextColumn::make('payment_method')
+                ->formatStateUsing(fn (int $state): string => match ($state) {
+                        1 => 'Transferencia', 2 => 'Efectivo', 3 => 'Otro',
+                        default => $state,
+                    })
                     ->searchable(),
                 TextColumn::make('created_at')
                     ->dateTime()

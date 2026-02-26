@@ -22,7 +22,11 @@ class PaymentInfolist
                 TextEntry::make('payment_date')
                     ->date(),
                 TextEntry::make('payment_method')
-                    ->placeholder('-'),
+                    ->placeholder('-')
+                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                        1 => 'Transferencia', 2 => 'Efectivo', 3 => 'Otro',
+                        default => $state,
+                    }),
                 TextEntry::make('created_at')
                     ->dateTime()
                     ->placeholder('-'),
