@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Filament\Resources\Customers;
-
+use UnitEnum;
 use App\Filament\Resources\Customers\Pages\CreateCustomer;
 use App\Filament\Resources\Customers\Pages\EditCustomer;
 use App\Filament\Resources\Customers\Pages\ListCustomers;
@@ -25,7 +25,11 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserCircle;
+    protected static ?string $modelLabel = 'Cliente';
+    protected static ?string $pluralModelLabel = 'Clientes';
+    protected static ?string $navigationLabel = 'Clientes';
+    protected static string|UnitEnum|null $navigationGroup = 'Administración'; // Opcional: para agrupar
 
     protected static ?string $recordTitleAttribute = 'name';
 
@@ -88,7 +92,8 @@ public static function table(Table $table): Table
                     return "https://wa.me/{$telefono}?text=" . urlencode($mensaje);
                 })
                 ->openUrlInNewTab(),
-            EditAction::make(),
+            EditAction::make()
+                ->label('Editar'),
         ]);
 }
 

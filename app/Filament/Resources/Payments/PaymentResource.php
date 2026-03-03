@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Filament\Resources\Payments;
-
+use UnitEnum;
 use App\Filament\Resources\Payments\Pages\CreatePayment;
 use App\Filament\Resources\Payments\Pages\EditPayment;
 use App\Filament\Resources\Payments\Pages\ListPayments;
@@ -20,9 +20,13 @@ class PaymentResource extends Resource
 {
     protected static ?string $model = Payment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
 
     //protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $modelLabel = 'Pago';
+    protected static ?string $pluralModelLabel = 'Pagos';
+    protected static ?string $navigationLabel = 'Pagos';
+    protected static string|UnitEnum|null $navigationGroup = 'Administración';
 
     public static function form(Schema $schema): Schema
     {

@@ -40,6 +40,7 @@ class PaymentsTable
                     ->date('d/m/Y'),
 
                 TextColumn::make('payment_method')
+                    ->label('Método de Pago')
                     ->badge() // Lo hace ver más bonito como una etiqueta
                     ->color('info')
                     ->formatStateUsing(fn ($state) => match ($state) {
