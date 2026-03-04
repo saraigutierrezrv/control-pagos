@@ -10,7 +10,7 @@ use Flowframe\Trend\TrendValue;
 class IncomeChart extends ChartWidget
 {
     protected ?string $heading = 'Ingresos Mensuales';
-    protected static ?int $sort = 2; // Debajo de las estadísticas
+    protected static ?int $sort = 3; 
 
     protected function getData(): array
     {

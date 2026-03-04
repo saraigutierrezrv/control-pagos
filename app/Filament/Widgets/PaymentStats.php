@@ -10,6 +10,7 @@ use Carbon\Carbon;
 
 class PaymentStats extends BaseWidget
 {
+    protected static ?int $sort = 2; 
     protected function getStats(): array
     {
         // 1. Recaudación del mes en curso

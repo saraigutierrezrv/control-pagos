@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\Payments\Pages;
+namespace App\Filament\Resources\Expenses\Pages;
 
-use App\Filament\Resources\Payments\PaymentResource;
+use App\Filament\Resources\Expenses\ExpenseResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 use App\Filament\Widgets\TaxOverview; // Importa tu widget
 
-class ListPayments extends ListRecords
+class ListExpenses extends ListRecords
 {
-    protected static string $resource = PaymentResource::class;
+    protected static string $resource = ExpenseResource::class;
 
     protected function getHeaderActions(): array
     {
@@ -17,6 +17,7 @@ class ListPayments extends ListRecords
             CreateAction::make(),
         ];
     }
+    // --- AQUÍ REGISTRAS EL WIDGET ---
     protected function getHeaderWidgets(): array
     {
         return [

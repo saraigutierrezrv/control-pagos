@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Filament\Resources\Customers\Schemas;
+namespace App\Filament\Resources\Expenses\Schemas;
 
-use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
-class CustomerInfolist
+class ExpenseInfolist
 {
     public static function configure(Schema $schema): Schema
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('phone'),
-                TextEntry::make('billiing_day')
+                TextEntry::make('description'),
+                TextEntry::make('amount_base')
+                    ->label('Monto Base')
                     ->numeric(),
-                TextEntry::make('monthly_amount')
+                TextEntry::make('tax_amount')
+                    ->label('Monto del IVA')
                     ->numeric(),
-                IconEntry::make('is_active')
-                    ->boolean(),
+                TextEntry::make('expense_date')
+                    ->label('Fecha del gasto')
+                    ->date(),
                 TextEntry::make('created_at')
                     ->label('Registrado el')
                     ->dateTime()

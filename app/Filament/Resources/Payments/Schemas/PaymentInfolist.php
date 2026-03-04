@@ -50,6 +50,11 @@ class PaymentInfolist
                     ->label('Registrado el')
                     ->dateTime()
                     ->placeholder('-'),
+
+                TextEntry::make('updated_at')
+                    ->label('Actualizado el')
+                    ->dateTime()
+                    ->placeholder('-'),    
             ]);
     }
 }
