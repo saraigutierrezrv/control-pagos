@@ -16,7 +16,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone');
             $table->integer('billing_day');
-            $table->decimal('monthly_amount', 10, 2);
+
+            $table->decimal('base_monthly_payment', 10, 2)->default(0);
+            $table->boolean('has_iva')->default(false);
+            $table->boolean('has_renta')->default(false);
+            $table->decimal('iva_amount', 10, 2)->default(0);
+            $table->decimal('renta_amount', 10, 2)->default(0);
+            $table->decimal('final_monthly_payment', 10, 2)->default(0);
+
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

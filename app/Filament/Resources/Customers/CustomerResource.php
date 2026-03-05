@@ -50,6 +50,8 @@ public static function table(Table $table): Table
         ->columns([
             TextColumn::make('name')
                 ->label('Cliente')
+                ->weight('bold')
+                ->color(fn (Customer $record) => self::getPaymentStatusColor($record))
                 ->searchable(),
 
             IconColumn::make('payment_status')
@@ -67,9 +69,14 @@ public static function table(Table $table): Table
                 ->falseColor('danger'),
 
             TextColumn::make('billing_day')
+                ->weight('bold')
+                ->suffix(' de cada mes')
+                ->badge()
+                ->color(fn (Customer $record) => self::getPaymentStatusColor($record))
                 ->label('Día de Pago'),
 
             TextColumn::make('phone')
+                ->color(fn (Customer $record) => self::getPaymentStatusColor($record))
                 ->label('Teléfono'),
         ])
         ->actions([
@@ -80,14 +87,14 @@ public static function table(Table $table): Table
                 ->url(function ($record) {
                     // 1. Preparamos los datos dinámicos
                     $nombre = $record->name;
-                    $monto = number_format($record->monthly_amount, 2);
+                    $monto = number_format($record->base_monthly_payment, 2);
                     $mes = now()->translatedFormat('F'); // Esto pondrá "febrero" automáticamente
                     
                     // 2. Limpiamos el teléfono por si tiene espacios o guiones
                     $telefono = preg_replace('/[^0-9]/', '', $record->phone);
 
                     // 3. Redactamos el mensaje con negritas (*) y emojis
-                    $mensaje = "Hola *{$nombre}*, te saludamos de *ICEA*. 👋 Te recordamos de realizar tu pago de *{$mes}* por un monto de *\${$monto}*. ¡Bendiciones! ✨";
+                    $mensaje = "Hola *{$nombre}*, te saludamos de *ICEA*. Te recordamos de realizar tu pago de *{$mes}* por un monto de *\${$monto}*. ¡Bendiciones!";
 
                     return "https://wa.me/{$telefono}?text=" . urlencode($mensaje);
                 })
@@ -96,6 +103,29 @@ public static function table(Table $table): Table
                 ->label('Editar'),
         ]);
 }
+    public static function getPaymentStatusColor(Customer $record): string
+    {
+        $hoy = now();
+        
+        // 1. Verificamos si ya existe un pago registrado este mes (Marzo 2026)
+        $yaPagoEsteMes = $record->payments()
+            ->whereMonth('payment_date', $hoy->month)
+            ->whereYear('payment_date', $hoy->year)
+            ->exists();
+
+        if ($yaPagoEsteMes) {
+            return 'success'; // Verde
+        }
+
+        // 2. Si no ha pagado y ya es su día (o ya pasó): Rojo
+        // Como hoy es 4 de marzo, si billing_day es 1, 2, 3 o 4, saldrá rojo.
+        if ($hoy->day >= $record->billing_day) {
+            return 'danger';
+        }
+
+        // 3. Si no ha pagado pero aún no llega su fecha: Gris
+        return 'gray';
+    }
 
     public static function getRelations(): array
     {

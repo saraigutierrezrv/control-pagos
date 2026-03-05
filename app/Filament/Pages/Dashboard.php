@@ -15,17 +15,18 @@ class Dashboard extends BaseDashboard
     public function filtersForm(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                Section::make('Filtro de Período Contable')
-                    ->schema([
-                        DatePicker::make('startDate')
-                            ->label('Fecha Inicio')
-                            ->default(now()->startOfMonth()),
-                        DatePicker::make('endDate')
-                            ->label('Fecha Fin')
-                            ->default(now()->endOfMonth()),
-                    ])
-                    ->columns(2),
-            ]);
+            // ->components([
+            //     Section::make('Filtro de Período Contable')
+            //         ->schema([
+            //             DatePicker::make('startDate')
+            //                 ->label('Fecha Inicio')
+            //                 ->default(now()->startOfMonth()),
+            //             DatePicker::make('endDate')
+            //                 ->label('Fecha Fin')
+            //                 ->default(now()->endOfMonth()),
+            //         ])
+            //         ->columns(2),
+            // ])
+            ;
     }
 }

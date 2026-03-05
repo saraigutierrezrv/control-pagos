@@ -8,6 +8,9 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
+use Illuminate\Database\Eloquent\Builder;
 
 class ExpensesTable
 {
@@ -35,7 +38,21 @@ class ExpensesTable
                     ->weight('bold'),
             ])
             ->filters([
-                //
+                Filter::make('fecha_rango')
+                    ->form([
+                        DatePicker::make('desde')
+                            ->label('Desde')
+                            ->default(now()->startOfMonth()),
+                        DatePicker::make('hasta')
+                            ->label('Hasta')
+                            ->default(now()->endOfMonth()),
+                    ])
+                    // Esto hace que el filtro se aplique a la base de datos
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['desde'], fn ($q, $date) => $q->whereDate('expense_date', '>=', $date))
+                            ->when($data['hasta'], fn ($q, $date) => $q->whereDate('expense_date', '<=', $date));
+                    })
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -46,5 +63,6 @@ class ExpensesTable
                     DeleteBulkAction::make(),
                 ]),
             ]);
+            
     }
 }

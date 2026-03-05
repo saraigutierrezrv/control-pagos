@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Models\Customer;
 
 class CustomersTable
 {
@@ -17,22 +18,29 @@ class CustomersTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->searchable(),
-                TextColumn::make('billiing_day')
+                TextColumn::make('billing_day')
+                    ->label('Dia de pago')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('monthly_amount')
-                    ->numeric()
+                TextColumn::make('base_monthly_payment')
+                    ->label('Pago base mensual')
+                    ->money('USD')
                     ->sortable(),
                 IconColumn::make('is_active')
+                    ->label('Activo')
                     ->boolean(),
                 TextColumn::make('created_at')
+                    ->label(label: 'Registrado el')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
+                    ->label(label: 'Actualizado el')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

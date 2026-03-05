@@ -33,7 +33,7 @@ class PaymentForm
                     ->live()
                     ->afterStateUpdated(function ($state, $set) {
                         $customer = Customer::find($state);
-                        $set('amount', $customer?->monthly_amount ?? 0);
+                        $set('amount', $customer?->final_monthly_payment ?? 0);
                     }),
 
                 Grid::make(2)
@@ -87,7 +87,7 @@ class PaymentForm
                                 // Si ya tenemos un cliente (por URL o por contexto), cargamos su mensualidad
                                 $customerId = request()->query('customer_id') ?? $get('../../id') ?? $get('customer_id');
                                 if ($customerId) {
-                                    return Customer::find($customerId)?->monthly_amount;
+                                    return Customer::find($customerId)?->final_monthly_payment;
                                 }
                                 return null;
                             }),

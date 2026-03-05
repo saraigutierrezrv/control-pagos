@@ -14,7 +14,12 @@ class Customer extends Model
         'name',
         'phone',
         'billing_day',
-        'monthly_amount',
+        'base_monthly_payment', // El pago base (ej. $400)
+        'has_iva',              // Boolean (Toggle)
+        'has_renta',            // Boolean (Toggle)
+        'iva_amount',           // El 13% calculado
+        'renta_amount',         // El 10% calculado
+        'final_monthly_payment',// El total final (Base + IVA - Renta)
         'is_active',
     ];
 

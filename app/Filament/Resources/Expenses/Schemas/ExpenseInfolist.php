@@ -14,10 +14,16 @@ class ExpenseInfolist
                 TextEntry::make('description'),
                 TextEntry::make('amount_base')
                     ->label('Monto Base')
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('$'),
                 TextEntry::make('tax_amount')
                     ->label('Monto del IVA')
-                    ->numeric(),
+                    ->numeric()
+                    ->prefix('$'),
+                    TextEntry::make('total')
+                    ->label('Monto Total (Con IVA)')
+                    ->numeric()
+                    ->prefix('$'),
                 TextEntry::make('expense_date')
                     ->label('Fecha del gasto')
                     ->date(),

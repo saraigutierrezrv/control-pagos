@@ -8,6 +8,8 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Filament\Tables\Filters\Filter;
+use Filament\Forms\Components\DatePicker;
 
 class PaymentsTable
 {
@@ -60,7 +62,20 @@ class PaymentsTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Filter::make('fecha_rango') // Usamos el mismo nombre para que el Widget lo reconozca
+                    ->form([
+                        DatePicker::make('desde')
+                            ->label('Desde')
+                            ->default(now()->startOfMonth()),
+                        DatePicker::make('hasta')
+                            ->label('Hasta')
+                            ->default(now()->endOfMonth()),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['desde'], fn ($q, $date) => $q->whereDate('created_at', '>=', $date))
+                            ->when($data['hasta'], fn ($q, $date) => $q->whereDate('created_at', '<=', $date));
+                    })
             ])
             ->recordActions([
                 ViewAction::make(),
