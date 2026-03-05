@@ -19,6 +19,7 @@ class Customer extends Model
         'has_renta',            // Boolean (Toggle)
         'iva_amount',           // El 13% calculado
         'renta_amount',         // El 10% calculado
+        'pago_a_cuenta_amount',// El total final (Base + IVA - Renta)
         'final_monthly_payment',// El total final (Base + IVA - Renta)
         'is_active',
     ];

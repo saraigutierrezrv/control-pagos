@@ -74,6 +74,13 @@ class CustomerForm
                             ->prefix('$')
                             ->readOnly()
                             ->extraAttributes(['class' => 'font-bold text-primary-600']),
+                        
+                        TextInput::make('pago_a_cuenta_amount')
+                            ->label('Pago a Cuenta')
+                            ->numeric()
+                            ->prefix('$')
+                            ->readOnly()
+                            ->extraAttributes(['class' => 'font-bold text-primary-600']),
                     ])->columns(3),
             ]);
     }
@@ -88,8 +95,11 @@ class CustomerForm
         // Fórmula en El Salvador: Base + IVA - Renta
         $final = $base + $iva - $renta;
 
+        $pagoACuenta = ($base * 0.0175);
+
         $set('iva_amount', number_format($iva, 2, '.', ''));
         $set('renta_amount', number_format($renta, 2, '.', ''));
         $set('final_monthly_payment', number_format($final, 2, '.', ''));
+        $set('pago_a_cuenta_amount', number_format($pagoACuenta, 2, '.', ''));
     }
 }

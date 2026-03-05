@@ -23,6 +23,8 @@ return new class extends Migration
             $table->decimal('iva_amount', 10, 2)->default(0);
             $table->decimal('renta_amount', 10, 2)->default(0);
             $table->decimal('final_monthly_payment', 10, 2)->default(0);
+            $table->decimal('pago_a_cuenta_amount', 10, 2)->default(0);
+
 
             $table->boolean('is_active')->default(true);
             $table->timestamps();

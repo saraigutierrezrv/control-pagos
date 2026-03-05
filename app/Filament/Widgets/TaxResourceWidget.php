@@ -38,6 +38,11 @@ class TaxResourceWidget extends BaseWidget
 
         $impuestoAPagar = $ivaDebito - $ivaCredito;
 
+        $pagoACuenta = Payment::query()
+        ->whereBetween('payments.created_at', [$startDate, $endDate])
+        ->join('customers', 'payments.customer_id', '=', 'customers.id')
+        ->sum('customers.pago_a_cuenta_amount');
+
         return [
             Stat::make('IVA Débito (Pagos)', '$' . number_format($ivaDebito, 2))
                 ->description('Del ' . Carbon::parse($startDate)->format('d/m/Y'))
@@ -47,10 +52,15 @@ class TaxResourceWidget extends BaseWidget
                 ->description('Del ' . Carbon::parse($endDate)->format('d/m/Y'))
                 ->color('danger'),
 
-            Stat::make('Impuesto a Pagar', '$' . number_format(max(0, $impuestoAPagar), 2))
+            Stat::make('Pago a Cuenta', '$' . number_format(max(0, $pagoACuenta), 2))
+            ->description('Monto a pagar')
+            ->chart([5, 10, 8, 12, 7, 15]) // Opcional: una gráfica de adorno
+            ->color('danger'),
+
+            Stat::make('IVA a pagar', '$' . number_format(max(0, $impuestoAPagar), 2))
                 ->description($impuestoAPagar > 0 ? 'Monto a pagar' : 'Saldo a favor')
                 ->chart([5, 10, 8, 12, 7, 15]) // Opcional: una gráfica de adorno
-                ->color($impuestoAPagar > 0 ? 'warning' : 'info'),
+                ->color($impuestoAPagar > 0 ? 'warning' : 'info'),            
         ];
     }
 }

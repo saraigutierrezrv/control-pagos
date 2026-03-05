@@ -79,6 +79,9 @@ class CustomerInfolist
                                     ->money('USD')
                                     ->weight('bold')
                                     ->color('success'),
+                                TextEntry::make('pago_a_cuenta_amount') // pago a cuenta
+                                    ->label('Pago a Cuenta')
+                                    ->money('USD'),
                             ]),
                     ])
                     ->columns(1),
